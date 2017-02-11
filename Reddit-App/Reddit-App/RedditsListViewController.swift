@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RedditsListViewController.swift
 //  Reddit-App
 //
 //  Created by Marcelo Busico on 11/2/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class RedditsListViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -19,7 +19,4 @@ class ViewController: UIViewController {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
-
-
 }
-
