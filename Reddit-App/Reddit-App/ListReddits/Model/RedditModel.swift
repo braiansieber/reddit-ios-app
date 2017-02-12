@@ -8,6 +8,24 @@
 
 import Foundation
 
-class RedditModel {
+struct RedditModel {
 
+  let title: String
+  let author: String
+  let commentsCount: Int
+  let dateCreated: Date
+  let thumbnailUrl: String
+
+  init(title: String,
+    author: String,
+    commentsCount: Int,
+    dateCreated: Date,
+    thumbnailUrl: String) {
+
+    self.title = title
+    self.author = author
+    self.commentsCount = commentsCount
+    self.dateCreated = dateCreated
+    self.thumbnailUrl = thumbnailUrl
+  }
 }

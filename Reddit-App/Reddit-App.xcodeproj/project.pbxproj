@@ -21,6 +21,7 @@
 		9C4C02F31E4FAFC800B7ABD2 /* ListRedditsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02F21E4FAFC800B7ABD2 /* ListRedditsPresenterTests.swift */; };
 		9C4C02F71E4FB22000B7ABD2 /* MockListRedditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02F51E4FB22000B7ABD2 /* MockListRedditsView.swift */; };
 		9C4C02F81E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02F61E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift */; };
+		9C4C02FB1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02FA1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		9C4C02F21E4FAFC800B7ABD2 /* ListRedditsPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListRedditsPresenterTests.swift; sourceTree = "<group>"; };
 		9C4C02F51E4FB22000B7ABD2 /* MockListRedditsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockListRedditsView.swift; sourceTree = "<group>"; };
 		9C4C02F61E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRedditServiceAdapter.swift; sourceTree = "<group>"; };
+		9C4C02FA1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditServiceAdapterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				9C4C02F41E4FB22000B7ABD2 /* Mocks */,
 				9C4C02F11E4FAFC800B7ABD2 /* UnitTests */,
+				9C4C02F91E512C1200B7ABD2 /* ServiceTests */,
 				9C4C02D31E4F9C2700B7ABD2 /* Info.plist */,
 			);
 			path = "Reddit-AppTests";
@@ -174,6 +177,14 @@
 				9C4C02F61E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		9C4C02F91E512C1200B7ABD2 /* ServiceTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C4C02FA1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift */,
+			);
+			path = ServiceTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +308,7 @@
 				9C4C02F71E4FB22000B7ABD2 /* MockListRedditsView.swift in Sources */,
 				9C4C02F81E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift in Sources */,
 				9C4C02F31E4FAFC800B7ABD2 /* ListRedditsPresenterTests.swift in Sources */,
+				9C4C02FB1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
