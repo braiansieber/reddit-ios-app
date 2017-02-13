@@ -6,7 +6,7 @@
 //  Copyright © 2017 Busico. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class RedditServiceAdapter: RedditServiceAdapterProtocol {
 
@@ -70,6 +70,29 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
     }.resume()
   }
 
+  func downloadImage(withURL url: URL,
+                     onComplete: @escaping (UIImage) -> Void,
+                     onError: @escaping (Error) -> Void) {
+
+    URLSession.shared.dataTask(with: url) { (data, response, error) in
+      if let error = error {
+        onError(error)
+        return
+      }
+
+      guard let data = data else {
+        onError(RedditServiceError(message: "Unexpected response data."))
+        return
+      }
+
+      if let image = UIImage(data: data) {
+        onComplete(image)
+      } else {
+        onError(RedditServiceError(message: "Unsupported image format."))
+      }
+    }.resume()
+  }
+
   // MARK: - Private Methods
   private func mapRedditModelList(jsonDictionary: [String: AnyObject]) -> [RedditModel] {
     var redditsList = [RedditModel]()
@@ -121,7 +144,6 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
 
     var thumbnailURL: URL? = nil
     var imageURL: URL? = nil
-
 
     if let thumbnailUrlString = redditDictionary["thumbnail"] as? String {
       thumbnailURL = URL(string: thumbnailUrlString)

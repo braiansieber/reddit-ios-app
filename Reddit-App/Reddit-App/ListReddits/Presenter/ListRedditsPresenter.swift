@@ -6,7 +6,7 @@
 //  Copyright © 2017 Busico. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ListRedditsPresenter {
 
@@ -48,6 +48,30 @@ class ListRedditsPresenter {
     }
 
     return redditsList[position]
+  }
+
+  func loadThumbnailForModel(model: RedditModel,
+                             onComplete: @escaping (UIImage?) -> Void) {
+
+    guard let thumbnailURL = model.thumbnailURL else {
+      onComplete(nil)
+      return
+    }
+
+    DispatchQueue.global().async {
+      self.serviceAdapter.downloadImage(withURL: thumbnailURL,
+        onComplete: { image in
+          DispatchQueue.main.async {
+            onComplete(image)
+          }
+        },
+        onError: { error in
+          DispatchQueue.main.async {
+            onComplete(nil)
+          }
+        }
+      )
+    }
   }
 
   // MARK: - Private Methods

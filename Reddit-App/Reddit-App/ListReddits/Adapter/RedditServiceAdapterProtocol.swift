@@ -6,7 +6,7 @@
 //  Copyright © 2017 Busico. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol RedditServiceAdapterProtocol {
 
@@ -24,4 +24,17 @@ protocol RedditServiceAdapterProtocol {
   func loadTopReddits(amount: Int, afterName: String?,
                       onComplete: @escaping (_ redditModel: [RedditModel]) -> Void,
                       onError: @escaping (_ error: Error) -> Void)
+
+  /**
+   Load image for specific URL.
+
+   - parameter url: URL to download image.
+
+   - parameter onComplete: Method called when completed without error.
+
+   - parameter onError: Method called when completed with error.
+   */
+  func downloadImage(withURL url: URL,
+                     onComplete: @escaping (UIImage) -> Void,
+                     onError: @escaping (Error) -> Void)
 }

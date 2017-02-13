@@ -63,6 +63,11 @@ class ListRedditsViewController: UITableViewController {
     }
 
     redditViewCell.model = elementModel
+
+    presenter.loadThumbnailForModel(model: elementModel) { image in
+      redditViewCell.setupThumbnail(withImage: image)
+    }
+
     return redditViewCell
   }
 

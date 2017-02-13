@@ -6,7 +6,7 @@
 //  Copyright © 2017 Busico. All rights reserved.
 //
 
-import Foundation
+import UIKit
 @testable import Reddit_App
 
 class MockRedditServiceAdapter: RedditServiceAdapterProtocol {
@@ -25,5 +25,12 @@ class MockRedditServiceAdapter: RedditServiceAdapterProtocol {
     } else {
       onError(RedditServiceError(message: "Mocked error."))
     }
+  }
+
+  func downloadImage(withURL url: URL,
+                     onComplete: @escaping (UIImage) -> Void,
+                     onError: @escaping (Error) -> Void) {
+
+    onError(RedditServiceError(message: "Unsupported method."))
   }
 }
