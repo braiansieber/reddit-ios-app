@@ -10,6 +10,10 @@ import UIKit
 
 class ListRedditsViewController: UITableViewController {
 
+  // MARK: - Constants
+  let redditCellReuseIdentifier = "RedditCell"
+  let estimatedRowHeight: CGFloat = 200
+
   // MARK: - Properties
   var presenter: ListRedditsPresenter!
 
@@ -19,6 +23,10 @@ class ListRedditsViewController: UITableViewController {
 
     let presenterFactory = ListRedditsPresenterFactory(view: self)
     self.presenter = presenterFactory.presenter
+
+    //Automatic Row Dimension
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = estimatedRowHeight
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -31,17 +39,23 @@ class ListRedditsViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let emptyCell = UITableViewCell()
+
     guard let elementModel = presenter.elementModel(forPosition: indexPath.row) else {
-      return UITableViewCell()
+      return emptyCell
     }
 
-    //TODO: To be implemented
-    return UITableViewCell()
+    guard let redditViewCell = tableView.dequeueReusableCell(withIdentifier: redditCellReuseIdentifier, for: indexPath) as? RedditViewCell else {
+      return emptyCell
+    }
+
+    redditViewCell.model = elementModel
+    return redditViewCell
   }
 
   // MARK: - UITableViewDelegate
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: false)
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }
 
