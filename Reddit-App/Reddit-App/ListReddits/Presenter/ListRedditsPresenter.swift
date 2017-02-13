@@ -75,6 +75,7 @@ class ListRedditsPresenter {
         }
       },
       onError: { error in
+        print(error)
         DispatchQueue.main.async {
           if let view = self.view {
             view.hideLoading()

@@ -16,26 +16,39 @@ class ListRedditsViewController: UITableViewController {
 
   // MARK: - Properties
   var presenter: ListRedditsPresenter!
+  let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
   // MARK: - ViewController lifecycle methods
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    //Presenter Setup
     let presenterFactory = ListRedditsPresenterFactory(view: self)
     self.presenter = presenterFactory.presenter
 
     //Automatic Row Dimension
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = estimatedRowHeight
+
+    //Loading indicator
+    loadingIndicator.center = view.center
+    view.addSubview(loadingIndicator)
   }
 
   override func viewWillAppear(_ animated: Bool) {
+    tableView.separatorStyle = .none
     presenter.start()
   }
 
   // MARK: - UITableViewDataSource
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return presenter.numberOfElements()
+    let numberOfRows = presenter.numberOfElements()
+
+    if numberOfRows > 0 {
+      tableView.separatorStyle = .singleLine
+    }
+
+    return numberOfRows
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,15 +75,17 @@ class ListRedditsViewController: UITableViewController {
 extension ListRedditsViewController: ListRedditsViewProtocol {
 
   func showLoading() {
-    //TODO: To be implemented
+    loadingIndicator.startAnimating()
   }
 
   func hideLoading() {
-    //TODO: To be implemented
+    loadingIndicator.stopAnimating()
   }
 
   func displayLoadingError(message: String) {
-    //TODO: To be implemented
+    let alertViewController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+    alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    present(alertViewController, animated: true, completion: nil)
   }
 
   func refreshRedditsList() {
