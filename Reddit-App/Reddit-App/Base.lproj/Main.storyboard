@@ -26,7 +26,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ucQ-cj-st2" userLabel="ThumbnailImageView">
-                                            <rect key="frame" x="8" y="8" width="80" height="80"/>
+                                            <rect key="frame" x="8" y="12" width="80" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="jwA-UD-W3y"/>
                                                 <constraint firstAttribute="width" constant="80" id="xDc-75-M3i"/>
@@ -60,7 +60,7 @@
                                     <constraints>
                                         <constraint firstItem="Kzv-m7-jb0" firstAttribute="leading" secondItem="gCo-Nn-10M" secondAttribute="leadingMargin" priority="750" id="2lK-Sy-HPR"/>
                                         <constraint firstItem="d9L-eT-8MG" firstAttribute="leading" secondItem="ucQ-cj-st2" secondAttribute="trailing" constant="8" id="4OW-mN-N09"/>
-                                        <constraint firstItem="ucQ-cj-st2" firstAttribute="top" secondItem="gCo-Nn-10M" secondAttribute="top" constant="8" id="7HC-37-fZY"/>
+                                        <constraint firstItem="ucQ-cj-st2" firstAttribute="top" secondItem="gCo-Nn-10M" secondAttribute="top" constant="12" id="7HC-37-fZY"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="GD0-Bg-U9g" secondAttribute="trailing" constant="8" id="C8C-wA-xIq"/>
                                         <constraint firstItem="Kzv-m7-jb0" firstAttribute="leading" secondItem="ucQ-cj-st2" secondAttribute="trailing" constant="8" id="JIB-2a-1D0"/>
                                         <constraint firstItem="d9L-eT-8MG" firstAttribute="top" secondItem="Kzv-m7-jb0" secondAttribute="bottom" constant="4" id="L9G-hu-TDH"/>

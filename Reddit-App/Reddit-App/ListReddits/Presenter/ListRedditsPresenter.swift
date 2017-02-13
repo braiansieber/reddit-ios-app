@@ -11,12 +11,12 @@ import Foundation
 class ListRedditsPresenter {
 
   // MARK: - Constants
-  let pageSize = 50
+  private let pageSize = 50
 
   // MARK: - Properties
-  weak var view: ListRedditsViewProtocol?
-  let serviceAdapter: RedditServiceAdapterProtocol
-  var redditsList = [RedditModel]()
+  private weak var view: ListRedditsViewProtocol?
+  private let serviceAdapter: RedditServiceAdapterProtocol
+  private var redditsList = [RedditModel]()
 
   // MARK: - Initialization
   init(view: ListRedditsViewProtocol, serviceAdapter: RedditServiceAdapterProtocol) {

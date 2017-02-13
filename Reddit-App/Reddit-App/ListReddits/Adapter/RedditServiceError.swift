@@ -9,6 +9,7 @@
 import Foundation
 
 struct RedditServiceError: Error {
+  
   let message: String
 
   init(message: String) {

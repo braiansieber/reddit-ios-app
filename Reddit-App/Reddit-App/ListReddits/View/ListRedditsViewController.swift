@@ -11,12 +11,12 @@ import UIKit
 class ListRedditsViewController: UITableViewController {
 
   // MARK: - Constants
-  let redditCellReuseIdentifier = "RedditCell"
-  let estimatedRowHeight: CGFloat = 200
+  private let redditCellReuseIdentifier = "RedditCell"
+  private let estimatedRowHeight: CGFloat = 200
 
   // MARK: - Properties
-  var presenter: ListRedditsPresenter!
-  let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  private var presenter: ListRedditsPresenter!
+  fileprivate let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
   // MARK: - ViewController lifecycle methods
   override func viewDidLoad() {

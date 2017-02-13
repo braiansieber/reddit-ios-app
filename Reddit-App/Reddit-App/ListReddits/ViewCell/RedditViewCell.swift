@@ -10,6 +10,9 @@ import UIKit
 
 class RedditViewCell: UITableViewCell {
 
+  // MARK: - Constants
+  private let thumbnailWidth: CGFloat = 80
+
   // MARK: - Outlets
   @IBOutlet weak var thumbnailImageView: UIImageView!
   @IBOutlet weak var titleLabel: UILabel!
@@ -45,5 +48,30 @@ class RedditViewCell: UITableViewCell {
     authorLabel.text = "By \(model.author)"
     dateLabel.text = "Submitted \(model.formattedTimeSinceSubmissions())"
     commentsLabel.text = "\(model.commentsCount) comments"
+
+    if let thumbnailURL = model.thumbnailURL {
+      setupThumbnail(withURL: thumbnailURL)
+    }
+  }
+
+  private func setupThumbnail(withURL thumbnailURL: URL) {
+    DispatchQueue.global().async {
+      URLSession.shared.dataTask(with: thumbnailURL) { (data, response, error) in
+        if error != nil {
+          return
+        }
+
+        guard let data = data else {
+          return
+        }
+
+        DispatchQueue.main.async {
+          self.thumbnailImageView.image = UIImage(data: data)
+          self.thumbnailImageView.isHidden = false
+          self.thumbnailLeftMarginConstraint.constant = 16
+          self.thumbnailWidthConstraint.constant = self.thumbnailWidth
+        }
+      }.resume()
+    }
   }
 }

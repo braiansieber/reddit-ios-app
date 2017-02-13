@@ -10,9 +10,11 @@ import Foundation
 
 class RedditServiceAdapter: RedditServiceAdapterProtocol {
 
-  let redditBaseURL = "https://www.reddit.com/"
-  let listTopReddits = "top.json"
+  // MARK: - Constants
+  private let redditBaseURL = "https://www.reddit.com/"
+  private let listTopReddits = "top.json"
 
+  // MARK: - Internal Methods
   func loadTopReddits(amount: Int, afterName: String?,
                       onComplete: @escaping (_ redditModel: [RedditModel]) -> Void,
                       onError: @escaping (_ error: Error) -> Void) {
@@ -68,9 +70,9 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
     }.resume()
   }
 
+  // MARK: - Private Methods
   private func mapRedditModelList(jsonDictionary: [String: AnyObject]) -> [RedditModel] {
     var redditsList = [RedditModel]()
-    //TODO: To be implemented
 
     guard let dataDictionary = jsonDictionary["data"] as? [String: AnyObject] else {
       return redditsList
