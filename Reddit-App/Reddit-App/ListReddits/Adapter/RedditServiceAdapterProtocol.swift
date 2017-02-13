@@ -17,7 +17,11 @@ protocol RedditServiceAdapterProtocol {
    
    - parameter afterName: Retrieve reddits after this name.
    
-   - returns: List of reddits.
+   - parameter onComplete: Method called when completed without error.
+
+   - parameter onError: Method called when completed with error.
   */
-  func loadTopReddits(amount: Int, afterName: String?) -> [RedditModel]
+  func loadTopReddits(amount: Int, afterName: String?,
+                      onComplete: (_ redditModel: [RedditModel]) -> Void,
+                      onError: (_ error: Error) -> Void)
 }
