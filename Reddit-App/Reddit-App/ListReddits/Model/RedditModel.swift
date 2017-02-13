@@ -15,20 +15,23 @@ struct RedditModel {
   let author: String
   let commentsCount: Int
   let dateCreated: Date
-  let thumbnailUrl: String
+  let thumbnailURL: URL?
+  let imageURL: URL?
 
   init(name: String,
     title: String,
     author: String,
     commentsCount: Int,
     dateCreated: Date,
-    thumbnailUrl: String) {
+    thumbnailURL: URL?,
+    imageURL: URL?) {
 
     self.name = name
     self.title = title
     self.author = author
     self.commentsCount = commentsCount
     self.dateCreated = dateCreated
-    self.thumbnailUrl = thumbnailUrl
+    self.thumbnailURL = thumbnailURL
+    self.imageURL = imageURL
   }
 }

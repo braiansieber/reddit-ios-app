@@ -54,7 +54,6 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
     }
 
     let request = URLRequest(url: url)
-    print(request)
 
     URLSession.shared.dataTask(with: request) { (data, response, error) in
       if let error = error {
@@ -73,7 +72,7 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
           return
         }
 
-        let redditsList = self.mapRedditModelList(jsonObject: jsonResponse)
+        let redditsList = self.mapRedditModelList(jsonDictionary: jsonResponse)
         onComplete(redditsList)
       } catch let error {
         onError(error)
@@ -81,9 +80,75 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
     }.resume()
   }
 
-  private func mapRedditModelList(jsonObject: [String: AnyObject]) -> [RedditModel] {
+  private func mapRedditModelList(jsonDictionary: [String: AnyObject]) -> [RedditModel] {
     var redditsList = [RedditModel]()
     //TODO: To be implemented
+
+    guard let dataDictionary = jsonDictionary["data"] as? [String: AnyObject] else {
+      return redditsList
+    }
+
+    guard let childrenArray = dataDictionary["children"] as? [AnyObject] else {
+      return redditsList
+    }
+
+    for redditObject in childrenArray {
+      guard let redditDictionary = redditObject["data"] as? [String: AnyObject] else {
+        continue
+      }
+
+      guard let redditModel = redditModel(withDictionary: redditDictionary) else {
+        continue
+      }
+
+      redditsList.append(redditModel)
+    }
     return redditsList
+  }
+
+  private func redditModel(withDictionary redditDictionary: [String: AnyObject]) -> RedditModel? {
+    guard let name = redditDictionary["name"] as? String else {
+      return nil
+    }
+
+    guard let title = redditDictionary["title"] as? String else {
+      return nil
+    }
+
+    guard let author = redditDictionary["author"] as? String else {
+      return nil
+    }
+
+    guard let commentsCount = redditDictionary["num_comments"] as? Int else {
+      return nil
+    }
+
+    guard let createdUtcTime = redditDictionary["created_utc"] as? TimeInterval else {
+      return nil
+    }
+
+    let dateCreated = Date(timeIntervalSince1970: createdUtcTime)
+
+    var thumbnailURL: URL? = nil
+    var imageURL: URL? = nil
+
+
+    if let thumbnailUrlString = redditDictionary["thumbnail"] as? String {
+      thumbnailURL = URL(string: thumbnailUrlString)
+    }
+
+    if let imageUrlString = redditDictionary["url"] as? String {
+      imageURL = URL(string: imageUrlString)
+    }
+
+    return RedditModel(
+      name: name,
+      title: title,
+      author: author,
+      commentsCount: commentsCount,
+      dateCreated: dateCreated,
+      thumbnailURL: thumbnailURL,
+      imageURL: imageURL
+    )
   }
 }

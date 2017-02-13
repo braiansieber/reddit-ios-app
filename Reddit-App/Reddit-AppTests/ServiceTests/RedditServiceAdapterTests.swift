@@ -34,7 +34,7 @@ class RedditServiceAdapterTests: XCTestCase {
           XCTAssertFalse(reddit.name.isEmpty, "Reddit name should not be empty.")
           XCTAssertFalse(reddit.title.isEmpty, "Reddit title should not be empty.")
           XCTAssertFalse(reddit.author.isEmpty, "Reddit author should not be empty.")
-          XCTAssertGreaterThan(0, reddit.commentsCount, "Reddit comments count should be a positive number.")
+          XCTAssertGreaterThanOrEqual(reddit.commentsCount, 0, "Reddit comments count should be a positive number.")
         }
         loadTopRedditsExpectation.fulfill()
       },
