@@ -58,10 +58,11 @@ class RedditServiceAdapterTests: XCTestCase {
       onComplete: { topReddits in
         guard let lastReddit = topReddits.last else {
           XCTFail("Last reddit could not be determined.")
+          loadTopRedditsExpectation.fulfill()
           return
         }
 
-        serviceAdapter.loadTopReddits(amount: amount, afterName: lastReddit.name,
+        self.serviceAdapter.loadTopReddits(amount: amount, afterName: lastReddit.name,
           onComplete: { topRedditsAfterReddit in
             //Verify
             XCTAssertEqual(amount, topRedditsAfterReddit.count, "Unexpected amount of reddits returned.")

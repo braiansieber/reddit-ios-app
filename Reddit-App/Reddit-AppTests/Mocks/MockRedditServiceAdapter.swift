@@ -12,8 +12,8 @@ import Foundation
 class MockRedditServiceAdapter: RedditServiceAdapterProtocol {
 
   func loadTopReddits(amount: Int, afterName: String?,
-                      onComplete: (_ redditModel: [RedditModel]) -> Void,
-                      onError: (_ error: Error) -> Void) {
+                      onComplete: @escaping (_ redditModel: [RedditModel]) -> Void,
+                      onError: @escaping (_ error: Error) -> Void) {
     //TODO: To be implemented
   }
 }
