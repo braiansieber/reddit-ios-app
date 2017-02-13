@@ -10,4 +10,11 @@ import Foundation
 
 protocol ListRedditsViewProtocol {
 
+  func showLoading()
+
+  func hideLoading()
+
+  func displayLoadingError(message: String)
+
+  func refreshRedditsList()
 }

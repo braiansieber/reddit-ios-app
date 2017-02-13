@@ -22,6 +22,8 @@
 		9C4C02F71E4FB22000B7ABD2 /* MockListRedditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02F51E4FB22000B7ABD2 /* MockListRedditsView.swift */; };
 		9C4C02F81E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02F61E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift */; };
 		9C4C02FB1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02FA1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift */; };
+		9C4C02FD1E515A5400B7ABD2 /* RedditServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02FC1E515A5400B7ABD2 /* RedditServiceError.swift */; };
+		9C4C02FF1E515ADE00B7ABD2 /* MockRedditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C02FE1E515ADE00B7ABD2 /* MockRedditModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		9C4C02F51E4FB22000B7ABD2 /* MockListRedditsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockListRedditsView.swift; sourceTree = "<group>"; };
 		9C4C02F61E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRedditServiceAdapter.swift; sourceTree = "<group>"; };
 		9C4C02FA1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditServiceAdapterTests.swift; sourceTree = "<group>"; };
+		9C4C02FC1E515A5400B7ABD2 /* RedditServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditServiceError.swift; sourceTree = "<group>"; };
+		9C4C02FE1E515ADE00B7ABD2 /* MockRedditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRedditModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 			children = (
 				9C4C02ED1E4FAD9300B7ABD2 /* RedditServiceAdapterProtocol.swift */,
 				9C4C02EB1E4FAD6600B7ABD2 /* RedditServiceAdapter.swift */,
+				9C4C02FC1E515A5400B7ABD2 /* RedditServiceError.swift */,
 			);
 			path = Adapter;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 			children = (
 				9C4C02F51E4FB22000B7ABD2 /* MockListRedditsView.swift */,
 				9C4C02F61E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift */,
+				9C4C02FE1E515ADE00B7ABD2 /* MockRedditModel.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -293,6 +299,7 @@
 				9C4C02EE1E4FAD9300B7ABD2 /* RedditServiceAdapterProtocol.swift in Sources */,
 				9C4C02E71E4FAC9400B7ABD2 /* ListRedditsPresenter.swift in Sources */,
 				9C4C02E31E4FAC2D00B7ABD2 /* ListRedditsViewController.swift in Sources */,
+				9C4C02FD1E515A5400B7ABD2 /* RedditServiceError.swift in Sources */,
 				9C4C02E91E4FAC9B00B7ABD2 /* ListRedditsViewProtocol.swift in Sources */,
 				9C4C02EC1E4FAD6600B7ABD2 /* RedditServiceAdapter.swift in Sources */,
 				9C4C02F01E4FAE2700B7ABD2 /* ListRedditsPresenterFactory.swift in Sources */,
@@ -308,6 +315,7 @@
 				9C4C02F71E4FB22000B7ABD2 /* MockListRedditsView.swift in Sources */,
 				9C4C02F81E4FB22000B7ABD2 /* MockRedditServiceAdapter.swift in Sources */,
 				9C4C02F31E4FAFC800B7ABD2 /* ListRedditsPresenterTests.swift in Sources */,
+				9C4C02FF1E515ADE00B7ABD2 /* MockRedditModel.swift in Sources */,
 				9C4C02FB1E512C1200B7ABD2 /* RedditServiceAdapterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,9 +11,19 @@ import Foundation
 
 class MockRedditServiceAdapter: RedditServiceAdapterProtocol {
 
+  var redditsList: [RedditModel]?
+  var numberOfLoadCalls = 0
+
   func loadTopReddits(amount: Int, afterName: String?,
                       onComplete: @escaping (_ redditModel: [RedditModel]) -> Void,
                       onError: @escaping (_ error: Error) -> Void) {
-    //TODO: To be implemented
+
+    numberOfLoadCalls += 1
+
+    if let redditsList = redditsList {
+      onComplete(redditsList)
+    } else {
+      onError(RedditServiceError(message: "Mocked error."))
+    }
   }
 }

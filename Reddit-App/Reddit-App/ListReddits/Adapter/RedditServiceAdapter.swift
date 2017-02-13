@@ -10,18 +10,6 @@ import Foundation
 
 class RedditServiceAdapter: RedditServiceAdapterProtocol {
 
-  struct RedditServiceError: Error {
-    let message: String
-
-    init(message: String) {
-      self.message = message
-    }
-
-    var localizedDescription: String {
-      return "Reddit Service Error: '\(message)'"
-    }
-  }
-
   let redditBaseURL = "https://www.reddit.com/"
   let listTopReddits = "top.json"
 
