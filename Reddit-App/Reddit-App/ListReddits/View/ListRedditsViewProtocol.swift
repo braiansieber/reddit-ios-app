@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ListRedditsViewProtocol {
+protocol ListRedditsViewProtocol: class {
 
   func showLoading()
 

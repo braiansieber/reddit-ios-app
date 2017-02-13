@@ -14,7 +14,7 @@ class ListRedditsPresenter {
   let pageSize = 50
 
   // MARK: - Properties
-  let view: ListRedditsViewProtocol
+  weak var view: ListRedditsViewProtocol?
   let serviceAdapter: RedditServiceAdapterProtocol
   var redditsList = [RedditModel]()
 
@@ -27,7 +27,9 @@ class ListRedditsPresenter {
   // MARK: - Internal Methods
   func start() {
     redditsList = [RedditModel]()
-    loadMoreReddits()
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+      self.loadMoreReddits()
+    }
   }
 
   func numberOfElements() -> Int {
@@ -40,7 +42,9 @@ class ListRedditsPresenter {
     }
 
     if position == (redditsList.count - 1) {
-      loadMoreReddits()
+      DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+        self.loadMoreReddits()
+      }
     }
 
     return redditsList[position]
@@ -54,17 +58,29 @@ class ListRedditsPresenter {
       afterName = lastReddit.name
     }
 
-    view.showLoading()
+    DispatchQueue.main.async {
+      if let view = self.view {
+        view.showLoading()
+      }
+    }
 
     serviceAdapter.loadTopReddits(amount: pageSize, afterName: afterName,
       onComplete: { redditsList in
         self.redditsList.append(contentsOf: redditsList)
-        self.view.refreshRedditsList()
-        self.view.hideLoading()
+        DispatchQueue.main.async {
+          if let view = self.view {
+            view.hideLoading()
+            view.refreshRedditsList()
+          }
+        }
       },
       onError: { error in
-        self.view.hideLoading()
-        self.view.displayLoadingError(message: "Error loading reddits. Please try again later.")
+        DispatchQueue.main.async {
+          if let view = self.view {
+            view.hideLoading()
+            view.displayLoadingError(message: "Error loading reddits. Please try again later.")
+          }
+        }
       }
     )
   }

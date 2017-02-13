@@ -11,6 +11,9 @@ import XCTest
 
 class ListRedditsPresenterTests: XCTestCase {
 
+  // MARK: - Tests constants
+  let expectationTimeOut: TimeInterval = 10
+
   // MARK: - Tests properties
   var view: MockListRedditsView!
   var serviceAdapter: MockRedditServiceAdapter!
@@ -27,20 +30,26 @@ class ListRedditsPresenterTests: XCTestCase {
   // MARK: - start method tests
   func testStart_withServiceError_shouldDisplayErrorMessage() {
     //Setup
+    let asyncExpectation = expectation(description: "testStart")
     serviceAdapter.redditsList = nil
 
     //Test
     presenter.start()
 
     //Verify
-    XCTAssertEqual(1, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(1, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(1, view.displayLoadingErrorsCalls, "Unexpected number of displayLoadingErrors calls.")
-    XCTAssertEqual(0, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+    view.displayLoadingErrorsCallback = {
+      XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(1, self.view.displayLoadingErrorsCalls, "Unexpected number of displayLoadingErrors calls.")
+      XCTAssertEqual(0, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectation.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
   }
 
   func testStart_withServiceSuccess_shouldDisplayAndHideLoadingAndRefreshList() {
     //Setup
+    let asyncExpectation = expectation(description: "testStart")
     var redditsList = [RedditModel]()
     redditsList.append(MockRedditModel.mock(name: "name1"))
     redditsList.append(MockRedditModel.mock(name: "name2"))
@@ -50,11 +59,15 @@ class ListRedditsPresenterTests: XCTestCase {
     //Test
     presenter.start()
 
-    //Verify
-    XCTAssertEqual(1, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(1, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(0, view.displayLoadingErrorsCalls, "Unexpected number of displayLoadingErrors calls.")
-    XCTAssertEqual(1, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+    view.refreshRedditsListCallback = {
+      //Verify
+      XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(0, self.view.displayLoadingErrorsCalls, "Unexpected number of displayLoadingErrors calls.")
+      XCTAssertEqual(1, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectation.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
   }
 
   // MARK: - numberOfElements method tests
@@ -64,13 +77,11 @@ class ListRedditsPresenterTests: XCTestCase {
 
     //Verify
     XCTAssertEqual(0, numberOfElements, "Unexpected number of elements.")
-    XCTAssertEqual(0, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(0, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(0, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
   }
 
   func testNumberOfElements_callingStart_shouldReturnNumberOfReddits() {
     //Setup
+    let asyncExpectation = expectation(description: "testNumberOfElements")
     var redditsList = [RedditModel]()
     redditsList.append(MockRedditModel.mock(name: "name1"))
     redditsList.append(MockRedditModel.mock(name: "name2"))
@@ -78,14 +89,18 @@ class ListRedditsPresenterTests: XCTestCase {
     serviceAdapter.redditsList = redditsList
     presenter.start()
 
-    //Test
-    let numberOfElements = presenter.numberOfElements()
+    view.refreshRedditsListCallback = {
+      //Test
+      let numberOfElements = self.presenter.numberOfElements()
 
-    //Verify
-    XCTAssertEqual(3, numberOfElements, "Unexpected number of elements.")
-    XCTAssertEqual(1, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(1, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(1, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      //Verify
+      XCTAssertEqual(3, numberOfElements, "Unexpected number of elements.")
+      XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(1, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectation.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
   }
 
   // MARK: - elementModel method tests
@@ -99,6 +114,7 @@ class ListRedditsPresenterTests: XCTestCase {
 
   func testElementModel_callingStart_requestingFirstElementModel_shouldReturnRedditModel() {
     //Setup
+    let asyncExpectation = expectation(description: "testElementModel")
     var redditsList = [RedditModel]()
     redditsList.append(MockRedditModel.mock(name: "name1"))
     redditsList.append(MockRedditModel.mock(name: "name2"))
@@ -106,18 +122,23 @@ class ListRedditsPresenterTests: XCTestCase {
     serviceAdapter.redditsList = redditsList
     presenter.start()
 
-    //Test
-    let firstElementModel = presenter.elementModel(forPosition: 0)
+    view.refreshRedditsListCallback = {
+      //Test
+      let firstElementModel = self.presenter.elementModel(forPosition: 0)
 
-    //Verify
-    XCTAssertNotNil(firstElementModel, "Element model should not be nil.")
-    XCTAssertEqual(1, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(1, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(1, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      //Verify
+      XCTAssertNotNil(firstElementModel, "Element model should not be nil.")
+      XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(1, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectation.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
   }
 
   func testElementModel_callingStart_requestingInvalidPosition_shouldReturnNil() {
     //Setup
+    let asyncExpectation = expectation(description: "testElementModel")
     var redditsList = [RedditModel]()
     redditsList.append(MockRedditModel.mock(name: "name1"))
     redditsList.append(MockRedditModel.mock(name: "name2"))
@@ -125,18 +146,23 @@ class ListRedditsPresenterTests: XCTestCase {
     serviceAdapter.redditsList = redditsList
     presenter.start()
 
-    //Test
-    let elementModel = presenter.elementModel(forPosition: 3)
+    view.refreshRedditsListCallback = {
+      //Test
+      let elementModel = self.presenter.elementModel(forPosition: 3)
 
-    //Verify
-    XCTAssertNil(elementModel, "Element model should be nil with invalid position.")
-    XCTAssertEqual(1, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(1, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(1, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      //Verify
+      XCTAssertNil(elementModel, "Element model should be nil with invalid position.")
+      XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(1, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectation.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
   }
 
   func testElementModel_callingStart_requestingLastElementModel_shouldLoadMoreElements() {
-    //Fisrt load setup
+    //First load setup
+    let asyncExpectationFirstLoad = expectation(description: "testElementModel")
     var redditsList = [RedditModel]()
     redditsList.append(MockRedditModel.mock(name: "name1"))
     redditsList.append(MockRedditModel.mock(name: "name2"))
@@ -144,18 +170,23 @@ class ListRedditsPresenterTests: XCTestCase {
     serviceAdapter.redditsList = redditsList
     presenter.start()
 
-    //Test
-    let firstElementModel = presenter.elementModel(forPosition: 0)
+    view.refreshRedditsListCallback = {
+      //Test
+      let firstElementModel = self.presenter.elementModel(forPosition: 0)
 
-    //Verify
-    XCTAssertNotNil(firstElementModel, "Element model should not be nil.")
-    XCTAssertEqual(1, serviceAdapter.numberOfLoadCalls, "Unexpected number of load calls.")
-    XCTAssertEqual(3, presenter.numberOfElements(), "Unexpected number of elements.")
-    XCTAssertEqual(1, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(1, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(1, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      //Verify
+      XCTAssertNotNil(firstElementModel, "Element model should not be nil.")
+      XCTAssertEqual(1, self.serviceAdapter.numberOfLoadCalls, "Unexpected number of load calls.")
+      XCTAssertEqual(3, self.presenter.numberOfElements(), "Unexpected number of elements.")
+      XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(1, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectationFirstLoad.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
 
     //Change adapter elements
+    let asyncExpectationSecondLoad = expectation(description: "testElementModel")
     redditsList = [RedditModel]()
     redditsList.append(MockRedditModel.mock(name: "name4"))
     redditsList.append(MockRedditModel.mock(name: "name5"))
@@ -164,12 +195,16 @@ class ListRedditsPresenterTests: XCTestCase {
     //Trigger second load with latest element
     let thirdElementModel = presenter.elementModel(forPosition: 2)
 
-    //Verify
-    XCTAssertNotNil(thirdElementModel, "Element model should not be nil.")
-    XCTAssertEqual(2, serviceAdapter.numberOfLoadCalls, "Unexpected number of load calls.")
-    XCTAssertEqual(5, presenter.numberOfElements(), "Unexpected number of elements.")
-    XCTAssertEqual(2, view.showLoadingCalls, "Unexpected number of showLoading calls.")
-    XCTAssertEqual(2, view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-    XCTAssertEqual(2, view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+    view.refreshRedditsListCallback = {
+      //Verify
+      XCTAssertNotNil(thirdElementModel, "Element model should not be nil.")
+      XCTAssertEqual(2, self.serviceAdapter.numberOfLoadCalls, "Unexpected number of load calls.")
+      XCTAssertEqual(5, self.presenter.numberOfElements(), "Unexpected number of elements.")
+      XCTAssertEqual(2, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
+      XCTAssertEqual(2, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
+      XCTAssertEqual(2, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
+      asyncExpectationSecondLoad.fulfill()
+    }
+    waitForExpectations(timeout: expectationTimeOut, handler: nil)
   }
 }

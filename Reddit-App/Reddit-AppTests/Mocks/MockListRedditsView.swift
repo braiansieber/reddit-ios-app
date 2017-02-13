@@ -14,7 +14,9 @@ class MockListRedditsView: ListRedditsViewProtocol {
   var showLoadingCalls = 0
   var hideLoadingCalls = 0
   var displayLoadingErrorsCalls = 0
+  var displayLoadingErrorsCallback: () -> Void = {}
   var refreshRedditsListCalls = 0
+  var refreshRedditsListCallback: () -> Void = {}
 
   func showLoading() {
     showLoadingCalls += 1
@@ -26,9 +28,11 @@ class MockListRedditsView: ListRedditsViewProtocol {
 
   func displayLoadingError(message: String) {
     displayLoadingErrorsCalls += 1
+    displayLoadingErrorsCallback()
   }
 
   func refreshRedditsList() {
     refreshRedditsListCalls += 1
+    refreshRedditsListCallback()
   }
 }
