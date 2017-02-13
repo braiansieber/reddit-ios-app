@@ -11,4 +11,7 @@ import Foundation
 
 class MockRedditServiceAdapter: RedditServiceAdapterProtocol {
 
+  func loadTopReddits(amount: Int, afterName: String?) -> [RedditModel] {
+    return [RedditModel]()
+  }
 }

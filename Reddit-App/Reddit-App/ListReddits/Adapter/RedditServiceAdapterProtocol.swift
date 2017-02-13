@@ -10,4 +10,14 @@ import Foundation
 
 protocol RedditServiceAdapterProtocol {
 
+  /**
+   Load top reddits from server.
+
+   - parameter amount: Reddits ammount to be retrieved (maximum: 100).
+   
+   - parameter afterName: Retrieve reddits after this name.
+   
+   - returns: List of reddits.
+  */
+  func loadTopReddits(amount: Int, afterName: String?) -> [RedditModel]
 }

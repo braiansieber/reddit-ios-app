@@ -10,4 +10,8 @@ import Foundation
 
 class RedditServiceAdapter: RedditServiceAdapterProtocol {
 
+  func loadTopReddits(amount: Int, afterName: String?) -> [RedditModel] {
+    //TODO: To be implemented
+    return [RedditModel]()
+  }
 }

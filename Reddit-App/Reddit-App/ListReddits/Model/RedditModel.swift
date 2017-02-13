@@ -10,18 +10,21 @@ import Foundation
 
 struct RedditModel {
 
+  let name: String
   let title: String
   let author: String
   let commentsCount: Int
   let dateCreated: Date
   let thumbnailUrl: String
 
-  init(title: String,
+  init(name: String,
+    title: String,
     author: String,
     commentsCount: Int,
     dateCreated: Date,
     thumbnailUrl: String) {
 
+    self.name = name
     self.title = title
     self.author = author
     self.commentsCount = commentsCount
