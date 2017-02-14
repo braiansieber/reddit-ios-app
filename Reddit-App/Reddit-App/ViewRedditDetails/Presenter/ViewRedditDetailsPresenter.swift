@@ -14,6 +14,7 @@ class ViewRedditDetailsPresenter: NSObject {
   private weak var view: ViewRedditDetailsViewProtocol?
   private let serviceAdapter: RedditServiceAdapterProtocol
   private var redditModel: RedditModel?
+  private var redditImage: UIImage?
 
   // MARK: - Initialization
   init(view: ViewRedditDetailsViewProtocol, serviceAdapter: RedditServiceAdapterProtocol) {
@@ -23,16 +24,34 @@ class ViewRedditDetailsPresenter: NSObject {
 
   // MARK: - Internal Methods
   func start(withModel model: RedditModel?) {
-    self.redditModel = model
+    if let updatedModel = model {
+      self.redditModel = updatedModel
+      self.redditImage = nil
+    }
+
     loadRedditDetailsAsync()
+  }
+
+  func saveState(coder: NSCoder) {
+    coder.encode(redditModel, forKey: "redditModel")
+    coder.encode(redditImage, forKey: "redditImage")
+  }
+
+  func restoreState(coder: NSCoder) {
+    if let redditModel = coder.decodeObject(forKey: "redditModel") as? RedditModel {
+      self.redditModel = redditModel
+      self.redditImage = coder.decodeObject(forKey: "redditImage") as? UIImage
+    }
   }
 
   func saveImage(_ image: UIImage?) {
     guard let image = image else {
       return
     }
-    
-    UIImageWriteToSavedPhotosAlbum(image, self, #selector(didFinishSavingImage(_:error:contextInfo:)), nil)
+
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+      UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.didFinishSavingImage(_:error:contextInfo:)), nil)
+    }
   }
 
   // MARK: - Save Image To Photo Album Methods
@@ -53,6 +72,11 @@ class ViewRedditDetailsPresenter: NSObject {
       return
     }
 
+    if let redditImage = redditImage {
+      self.view?.displayImage(redditImage)
+      return
+    }
+
     self.view?.showLoading()
 
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
@@ -60,6 +84,7 @@ class ViewRedditDetailsPresenter: NSObject {
         onComplete: { image in
           DispatchQueue.main.async {
             if let view = self.view {
+              self.redditImage = image
               view.hideLoading()
               view.displayImage(image)
             }

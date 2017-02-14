@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RedditModel {
+class RedditModel: NSObject, NSCoding {
 
   let name: String
   let title: String
@@ -35,6 +35,28 @@ struct RedditModel {
     self.imageURL = imageURL
   }
 
+  // MARK: - NSCoding
+  required init?(coder: NSCoder) {
+    self.name = coder.decodeString(name: "name")
+    self.title = coder.decodeString(name: "title")
+    self.author = coder.decodeString(name: "author")
+    self.commentsCount = coder.decodeInteger(forKey: "commentsCount")
+    self.dateCreated = Date(timeIntervalSince1970: coder.decodeDouble(forKey: "dateCreated"))
+    self.thumbnailURL = coder.decodeURL(name: "thumbnailURL")
+    self.imageURL = coder.decodeURL(name: "imageURL")
+  }
+
+  func encode(with coder: NSCoder) {
+    coder.encode(self.name, forKey: "name")
+    coder.encode(self.title, forKey: "title")
+    coder.encode(self.author, forKey: "author")
+    coder.encode(self.commentsCount, forKey: "commentsCount")
+    coder.encode(self.dateCreated.timeIntervalSince1970, forKey: "dateCreated")
+    coder.encode(self.thumbnailURL?.absoluteString, forKey: "thumbnailURL")
+    coder.encode(self.imageURL?.absoluteString, forKey: "imageURL")
+  }
+
+  // MARK: - Internal Methods
   func formattedTimeSinceSubmissions() -> String {
     let currentDate = Date()
     let timeInterval = currentDate.timeIntervalSince(dateCreated)

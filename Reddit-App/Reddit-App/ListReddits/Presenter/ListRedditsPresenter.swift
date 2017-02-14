@@ -26,8 +26,23 @@ class ListRedditsPresenter {
 
   // MARK: - Internal Methods
   func start() {
-    redditsList = [RedditModel]()
-    loadMoreRedditsAsync()
+    if redditsList.isEmpty {
+      loadRedditsAsync(appendToCurrentRedditsList: false)
+    }
+  }
+
+  func refresh() {
+    loadRedditsAsync(appendToCurrentRedditsList: false)
+  }
+
+  func saveState(coder: NSCoder) {
+    coder.encode(redditsList, forKey: "redditsList")
+  }
+
+  func restoreState(coder: NSCoder) {
+    if let redditsList = coder.decodeObject(forKey: "redditsList") as? [RedditModel] {
+      self.redditsList = redditsList
+    }
   }
 
   func numberOfElements() -> Int {
@@ -40,10 +55,16 @@ class ListRedditsPresenter {
     }
 
     if position == (redditsList.count - 1) {
-      loadMoreRedditsAsync()
+      loadRedditsAsync(appendToCurrentRedditsList: true)
     }
 
     return redditsList[position]
+  }
+
+  func elementPosition(forName name: String) -> Int? {
+    return redditsList.index { (redditModel) -> Bool in
+      return redditModel.name == name
+    }
   }
 
   func loadThumbnailForModel(model: RedditModel,
@@ -80,10 +101,12 @@ class ListRedditsPresenter {
   }
 
   // MARK: - Private Methods
-  private func loadMoreRedditsAsync() {
+  private func loadRedditsAsync(appendToCurrentRedditsList: Bool) {
     var afterName: String? = nil
 
-    if let lastReddit = self.redditsList.last {
+    if appendToCurrentRedditsList,
+       let lastReddit = redditsList.last {
+
       afterName = lastReddit.name
     }
 
@@ -92,7 +115,11 @@ class ListRedditsPresenter {
     DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
       self.serviceAdapter.loadTopReddits(amount: self.pageSize, afterName: afterName,
         onComplete: { redditsList in
-          self.redditsList.append(contentsOf: redditsList)
+          if appendToCurrentRedditsList {
+            self.redditsList.append(contentsOf: redditsList)
+          } else {
+            self.redditsList = redditsList
+          }
           DispatchQueue.main.async {
             if let view = self.view {
               view.hideLoading()

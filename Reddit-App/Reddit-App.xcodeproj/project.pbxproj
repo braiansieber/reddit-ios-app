@@ -29,6 +29,7 @@
 		9C4C03181E5279FE00B7ABD2 /* RedditServiceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C03141E5279FE00B7ABD2 /* RedditServiceAdapter.swift */; };
 		9C4C03191E5279FE00B7ABD2 /* RedditServiceAdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C03151E5279FE00B7ABD2 /* RedditServiceAdapterProtocol.swift */; };
 		9C4C031A1E5279FE00B7ABD2 /* RedditServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C03161E5279FE00B7ABD2 /* RedditServiceError.swift */; };
+		9CB191431E5349CB00BC90CA /* CoderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB191421E5349CB00BC90CA /* CoderExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		9C4C03141E5279FE00B7ABD2 /* RedditServiceAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditServiceAdapter.swift; sourceTree = "<group>"; };
 		9C4C03151E5279FE00B7ABD2 /* RedditServiceAdapterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditServiceAdapterProtocol.swift; sourceTree = "<group>"; };
 		9C4C03161E5279FE00B7ABD2 /* RedditServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditServiceError.swift; sourceTree = "<group>"; };
+		9CB191421E5349CB00BC90CA /* CoderExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoderExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				9C4C03131E5279FE00B7ABD2 /* ServiceAdapters */,
 				9C4C02DC1E4FABDF00B7ABD2 /* ListReddits */,
 				9C4C03061E52791C00B7ABD2 /* ViewRedditDetails */,
+				9CB191411E53499600BC90CA /* Utils */,
 				9C4C02BC1E4F9C2700B7ABD2 /* AppDelegate.swift */,
 				9C4C02C01E4F9C2700B7ABD2 /* Main.storyboard */,
 				9C4C02C31E4F9C2700B7ABD2 /* Assets.xcassets */,
@@ -240,6 +243,14 @@
 			path = ServiceAdapters;
 			sourceTree = "<group>";
 		};
+		9CB191411E53499600BC90CA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9CB191421E5349CB00BC90CA /* CoderExtension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -343,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CB191431E5349CB00BC90CA /* CoderExtension.swift in Sources */,
 				9C4C030F1E52791C00B7ABD2 /* ViewRedditDetailsViewController.swift in Sources */,
 				9C4C03171E5279FE00B7ABD2 /* RedditModel.swift in Sources */,
 				9C4C030E1E52791C00B7ABD2 /* ViewRedditDetailsPresenterFactory.swift in Sources */,

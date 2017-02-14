@@ -22,19 +22,30 @@ class ViewRedditDetailsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    //Presenter Setup
-    let presenterFactory = ViewRedditDetailsPresenterFactory(view: self)
-    self.presenter = presenterFactory.presenter
-
     //Loading indicator
     loadingIndicator.center = view.center
     view.addSubview(loadingIndicator)
+
+    //Presenter Setup
+    let presenterFactory = ViewRedditDetailsPresenterFactory(view: self)
+    self.presenter = presenterFactory.presenter
   }
 
   override func viewWillAppear(_ animated: Bool) {
     presenter.start(withModel: redditModel)
   }
 
+  override func encodeRestorableState(with coder: NSCoder) {
+    super.encodeRestorableState(with: coder)
+    presenter.saveState(coder: coder)
+  }
+
+  override func decodeRestorableState(with coder: NSCoder) {
+    super.decodeRestorableState(with: coder)
+    presenter.restoreState(coder: coder)
+  }
+
+  // MARK: - Actions
   @IBAction func saveImageAction(_ sender: Any) {
     presenter.saveImage(imageView.image)
   }

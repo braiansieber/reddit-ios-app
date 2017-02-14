@@ -16,8 +16,7 @@ class ListRedditsViewController: UITableViewController {
   fileprivate let showImageSegueIdentifier = "showImage"
 
   // MARK: - Properties
-  private var presenter: ListRedditsPresenter!
-  fileprivate let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  fileprivate var presenter: ListRedditsPresenter!
   fileprivate var redditModelForDetails: RedditModel?
 
   // MARK: - ViewController lifecycle methods
@@ -29,14 +28,26 @@ class ListRedditsViewController: UITableViewController {
     tableView.estimatedRowHeight = estimatedRowHeight
     tableView.separatorStyle = .none
 
-    //Loading indicator
-    loadingIndicator.center = view.center
-    view.addSubview(loadingIndicator)
+    //Pull to refresh setup
+    refreshControl?.addTarget(self, action: #selector(refreshRequested), for: .valueChanged)
 
     //Presenter Setup
     let presenterFactory = ListRedditsPresenterFactory(view: self)
     presenter = presenterFactory.presenter
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
     presenter.start()
+  }
+
+  override func encodeRestorableState(with coder: NSCoder) {
+    super.encodeRestorableState(with: coder)
+    presenter.saveState(coder: coder)
+  }
+
+  override func decodeRestorableState(with coder: NSCoder) {
+    super.decodeRestorableState(with: coder)
+    presenter.restoreState(coder: coder)
   }
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,16 +94,40 @@ class ListRedditsViewController: UITableViewController {
     tableView.deselectRow(at: indexPath, animated: true)
     presenter.elementSelected(atPosition: indexPath.row)
   }
+
+  // MARK: - Pull to refresh handler
+  @objc func refreshRequested(refreshControl: UIRefreshControl) {
+    presenter.refresh()
+  }
+}
+
+extension ListRedditsViewController: UIDataSourceModelAssociation {
+
+  func modelIdentifierForElement(at indexPath: IndexPath, in view: UIView) -> String? {
+    guard let elementModel = presenter.elementModel(forPosition: indexPath.row) else {
+      return nil
+    }
+
+    return elementModel.name
+  }
+
+  func indexPathForElement(withModelIdentifier identifier: String, in view: UIView) -> IndexPath? {
+    guard let elementPosition = presenter.elementPosition(forName: identifier) else {
+      return nil
+    }
+
+    return IndexPath(row: elementPosition, section: 0)
+  }
 }
 
 extension ListRedditsViewController: ListRedditsViewProtocol {
 
   func showLoading() {
-    loadingIndicator.startAnimating()
+    refreshControl?.beginRefreshing()
   }
 
   func hideLoading() {
-    loadingIndicator.stopAnimating()
+    refreshControl?.endRefreshing()
   }
 
   func displayMessage(title: String, message: String) {
