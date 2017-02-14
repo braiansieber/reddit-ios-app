@@ -1,5 +1,5 @@
 # reddit-ios-app
-Reddit iOS App
+Reddit iOS App is a simlpe Top Reddits viewer implemented in Swift3.
 
 ## Features
 - Get Top Reddits from API using URLSession and GCD.
