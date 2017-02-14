@@ -2,8 +2,9 @@
 Reddit iOS App
 
 ## Features
-- Get Top Reddits from API using NSURLSession
+- Get Top Reddits from API using URLSession and GCD.
 - List Top Reddits with thumbnails (implemented using MVP and DI patterns).
+- Support for different device resolutions and orientation.
 - Pull to refresh Reddits.
 - Load more Reddits when reaching end of list.
 - Display Reddit details (only for reddits with images in PNG and JPG format).
