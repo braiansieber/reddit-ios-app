@@ -116,14 +116,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kPP-ha-H0Y" userLabel="ImageView">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaP-Iw-R26">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="save" id="lyb-2p-geU" userLabel="ActionSave">
+                                        <connections>
+                                            <action selector="saveImageAction:" destination="5N9-gD-sh4" id="sKL-ot-tmL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="gaP-Iw-R26" secondAttribute="trailing" id="E7l-R7-ezq"/>
                             <constraint firstAttribute="trailing" secondItem="kPP-ha-H0Y" secondAttribute="trailing" id="Fzz-dy-nYf"/>
-                            <constraint firstItem="rKx-Rl-ci1" firstAttribute="top" secondItem="kPP-ha-H0Y" secondAttribute="bottom" id="Pcm-8n-0zG"/>
+                            <constraint firstItem="gaP-Iw-R26" firstAttribute="leading" secondItem="kqg-sT-6zU" secondAttribute="leading" id="NMx-1Y-aIa"/>
                             <constraint firstItem="kPP-ha-H0Y" firstAttribute="leading" secondItem="kqg-sT-6zU" secondAttribute="leading" id="eM8-FG-BjE"/>
+                            <constraint firstItem="gaP-Iw-R26" firstAttribute="top" secondItem="kPP-ha-H0Y" secondAttribute="bottom" id="ego-mP-yOG"/>
+                            <constraint firstItem="rKx-Rl-ci1" firstAttribute="top" secondItem="gaP-Iw-R26" secondAttribute="bottom" id="rtG-pl-aSk"/>
                             <constraint firstItem="kPP-ha-H0Y" firstAttribute="top" secondItem="Nmc-0M-3eT" secondAttribute="bottom" id="sFQ-Oz-BGH"/>
                         </constraints>
                     </view>
@@ -133,7 +146,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wu6-Mp-H0q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1358" y="152"/>
+            <point key="canvasLocation" x="1357.5999999999999" y="151.57421289355324"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4Eh-pG-etE">

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewRedditDetailsPresenter {
+class ViewRedditDetailsPresenter: NSObject {
 
   // MARK: - Properties
   private weak var view: ViewRedditDetailsViewProtocol?
@@ -25,6 +25,25 @@ class ViewRedditDetailsPresenter {
   func start(withModel model: RedditModel?) {
     self.redditModel = model
     loadRedditDetailsAsync()
+  }
+
+  func saveImage(_ image: UIImage?) {
+    guard let image = image else {
+      return
+    }
+    
+    UIImageWriteToSavedPhotosAlbum(image, self, #selector(didFinishSavingImage(_:error:contextInfo:)), nil)
+  }
+
+  // MARK: - Save Image To Photo Album Methods
+  @objc func didFinishSavingImage(_ image: UIImage, error: Error?, contextInfo: UnsafeRawPointer) {
+    if let view = self.view {
+      if error == nil {
+        view.displayMessage(title: "Success!", message: "Please check your gallery to find your saved reddit image.")
+      } else {
+        view.displayMessage(title: "Error", message: "Error saving image into your gallery. Please check Reddit application settings and grant Photos permissions.")
+      }
+    }
   }
 
   // MARK: - Private Methods

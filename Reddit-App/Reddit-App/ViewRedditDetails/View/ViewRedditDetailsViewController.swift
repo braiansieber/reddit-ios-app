@@ -34,6 +34,10 @@ class ViewRedditDetailsViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     presenter.start(withModel: redditModel)
   }
+
+  @IBAction func saveImageAction(_ sender: Any) {
+    presenter.saveImage(imageView.image)
+  }
 }
 
 extension ViewRedditDetailsViewController: ViewRedditDetailsViewProtocol {
