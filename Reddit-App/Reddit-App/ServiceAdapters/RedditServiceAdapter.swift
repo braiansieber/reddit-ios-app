@@ -13,6 +13,7 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
   // MARK: - Constants
   private let redditBaseURL = "https://www.reddit.com/"
   private let listTopReddits = "top.json"
+  private let supportedURLsExtensions = [".jpg", ".jpeg", ".png"]
 
   // MARK: - Internal Methods
   func loadTopReddits(amount: Int, afterName: String?,
@@ -150,7 +151,12 @@ class RedditServiceAdapter: RedditServiceAdapterProtocol {
     }
 
     if let imageUrlString = redditDictionary["url"] as? String {
-      imageURL = URL(string: imageUrlString)
+      //Filter: Only allow reddit URLs for images.
+      if supportedURLsExtensions.contains(where: { (urlExtension) -> Bool in
+        return imageUrlString.lowercased().hasSuffix(urlExtension)
+      }) {
+        imageURL = URL(string: imageUrlString)
+      }
     }
 
     return RedditModel(

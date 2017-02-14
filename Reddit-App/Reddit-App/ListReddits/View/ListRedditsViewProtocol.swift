@@ -14,7 +14,9 @@ protocol ListRedditsViewProtocol: class {
 
   func hideLoading()
 
-  func displayLoadingError(message: String)
+  func displayMessage(title: String, message: String)
 
   func refreshRedditsList()
+
+  func showDetailsScreen(forModel model: RedditModel)
 }

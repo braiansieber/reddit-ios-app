@@ -37,10 +37,10 @@ class ListRedditsPresenterTests: XCTestCase {
     presenter.start()
 
     //Verify
-    view.displayLoadingErrorsCallback = {
+    view.displayMessageCallback = {
       XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
       XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-      XCTAssertEqual(1, self.view.displayLoadingErrorsCalls, "Unexpected number of displayLoadingErrors calls.")
+      XCTAssertEqual(1, self.view.displayMessageCalls, "Unexpected number of displayMessage calls.")
       XCTAssertEqual(0, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
       asyncExpectation.fulfill()
     }
@@ -63,7 +63,7 @@ class ListRedditsPresenterTests: XCTestCase {
       //Verify
       XCTAssertEqual(1, self.view.showLoadingCalls, "Unexpected number of showLoading calls.")
       XCTAssertEqual(1, self.view.hideLoadingCalls, "Unexpected number of hideLoading calls.")
-      XCTAssertEqual(0, self.view.displayLoadingErrorsCalls, "Unexpected number of displayLoadingErrors calls.")
+      XCTAssertEqual(0, self.view.displayMessageCalls, "Unexpected number of displayLoadingErrors calls.")
       XCTAssertEqual(1, self.view.refreshRedditsListCalls, "Unexpected number of refreshRedditsList calls.")
       asyncExpectation.fulfill()
     }

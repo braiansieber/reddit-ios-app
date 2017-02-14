@@ -29,12 +29,15 @@ class RedditViewCell: UITableViewCell {
 
   // MARK: - Private methods
   private func refreshView() {
+    setupThumbnail(withImage: nil)
+    accessoryType = .none
+    selectionStyle = .none
+
     guard let model = self.model else {
       titleLabel.text = String()
       authorLabel.text = String()
       dateLabel.text = String()
       commentsLabel.text = String()
-      setupThumbnail(withImage: nil)
       return
     }
 
@@ -42,6 +45,11 @@ class RedditViewCell: UITableViewCell {
     authorLabel.text = "By \(model.author)"
     dateLabel.text = "Submitted \(model.formattedTimeSinceSubmissions())"
     commentsLabel.text = "\(model.commentsCount) comments"
+
+    if model.imageURL != nil {
+      accessoryType = .disclosureIndicator
+      selectionStyle = .default
+    }
   }
 
   func setupThumbnail(withImage image: UIImage?) {

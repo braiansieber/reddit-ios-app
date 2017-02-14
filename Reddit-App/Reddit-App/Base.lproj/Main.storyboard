@@ -25,7 +25,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="342" height="175"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ucQ-cj-st2" userLabel="ThumbnailImageView">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ucQ-cj-st2" userLabel="ThumbnailImageView">
                                             <rect key="frame" x="16" y="12" width="80" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="jwA-UD-W3y"/>
@@ -106,7 +106,7 @@
         <!--Reddit Image-->
         <scene sceneID="Xhm-FZ-4p8">
             <objects>
-                <viewController id="5N9-gD-sh4" userLabel="Reddit Image" sceneMemberID="viewController">
+                <viewController title="Image" id="5N9-gD-sh4" userLabel="Reddit Image" customClass="ViewRedditDetailsViewController" customModule="Reddit_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nmc-0M-3eT"/>
                         <viewControllerLayoutGuide type="bottom" id="rKx-Rl-ci1"/>
@@ -119,7 +119,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="kPP-ha-H0Y" secondAttribute="trailing" id="Fzz-dy-nYf"/>
                             <constraint firstItem="rKx-Rl-ci1" firstAttribute="top" secondItem="kPP-ha-H0Y" secondAttribute="bottom" id="Pcm-8n-0zG"/>
@@ -127,6 +127,9 @@
                             <constraint firstItem="kPP-ha-H0Y" firstAttribute="top" secondItem="Nmc-0M-3eT" secondAttribute="bottom" id="sFQ-Oz-BGH"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="kPP-ha-H0Y" id="ngJ-zO-stt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wu6-Mp-H0q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -27,9 +27,7 @@ class ListRedditsPresenter {
   // MARK: - Internal Methods
   func start() {
     redditsList = [RedditModel]()
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-      self.loadMoreReddits()
-    }
+    loadMoreRedditsAsync()
   }
 
   func numberOfElements() -> Int {
@@ -42,9 +40,7 @@ class ListRedditsPresenter {
     }
 
     if position == (redditsList.count - 1) {
-      DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-        self.loadMoreReddits()
-      }
+      loadMoreRedditsAsync()
     }
 
     return redditsList[position]
@@ -74,39 +70,46 @@ class ListRedditsPresenter {
     }
   }
 
+  func elementSelected(atPosition position: Int) {
+    guard let redditModel = elementModel(forPosition: position),
+          redditModel.imageURL != nil else {
+      return
+    }
+
+    view?.showDetailsScreen(forModel: redditModel)
+  }
+
   // MARK: - Private Methods
-  private func loadMoreReddits() {
+  private func loadMoreRedditsAsync() {
     var afterName: String? = nil
 
-    if let lastReddit = redditsList.last {
+    if let lastReddit = self.redditsList.last {
       afterName = lastReddit.name
     }
 
-    DispatchQueue.main.async {
-      if let view = self.view {
-        view.showLoading()
-      }
-    }
+    self.view?.showLoading()
 
-    serviceAdapter.loadTopReddits(amount: pageSize, afterName: afterName,
-      onComplete: { redditsList in
-        self.redditsList.append(contentsOf: redditsList)
-        DispatchQueue.main.async {
-          if let view = self.view {
-            view.hideLoading()
-            view.refreshRedditsList()
+    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+      self.serviceAdapter.loadTopReddits(amount: self.pageSize, afterName: afterName,
+        onComplete: { redditsList in
+          self.redditsList.append(contentsOf: redditsList)
+          DispatchQueue.main.async {
+            if let view = self.view {
+              view.hideLoading()
+              view.refreshRedditsList()
+            }
+          }
+        },
+        onError: { error in
+          print(error)
+          DispatchQueue.main.async {
+            if let view = self.view {
+              view.hideLoading()
+              view.displayMessage(title: "Error", message: "Error loading reddits. Please try again later.")
+            }
           }
         }
-      },
-      onError: { error in
-        print(error)
-        DispatchQueue.main.async {
-          if let view = self.view {
-            view.hideLoading()
-            view.displayLoadingError(message: "Error loading reddits. Please try again later.")
-          }
-        }
-      }
-    )
+      )
+    }
   }
 }

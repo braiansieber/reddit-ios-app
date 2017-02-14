@@ -13,10 +13,11 @@ class MockListRedditsView: ListRedditsViewProtocol {
 
   var showLoadingCalls = 0
   var hideLoadingCalls = 0
-  var displayLoadingErrorsCalls = 0
-  var displayLoadingErrorsCallback: () -> Void = {}
+  var displayMessageCalls = 0
+  var displayMessageCallback: () -> Void = {}
   var refreshRedditsListCalls = 0
   var refreshRedditsListCallback: () -> Void = {}
+  var showDetailsScreenCalls = 0
 
   func showLoading() {
     showLoadingCalls += 1
@@ -26,13 +27,17 @@ class MockListRedditsView: ListRedditsViewProtocol {
     hideLoadingCalls += 1
   }
 
-  func displayLoadingError(message: String) {
-    displayLoadingErrorsCalls += 1
-    displayLoadingErrorsCallback()
+  func displayMessage(title: String, message: String) {
+    displayMessageCalls += 1
+    displayMessageCallback()
   }
 
   func refreshRedditsList() {
     refreshRedditsListCalls += 1
     refreshRedditsListCallback()
+  }
+
+  func showDetailsScreen(forModel: RedditModel) {
+    showDetailsScreenCalls += 1
   }
 }

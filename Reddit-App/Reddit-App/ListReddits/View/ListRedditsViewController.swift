@@ -13,31 +13,38 @@ class ListRedditsViewController: UITableViewController {
   // MARK: - Constants
   private let redditCellReuseIdentifier = "RedditCell"
   private let estimatedRowHeight: CGFloat = 200
+  fileprivate let showImageSegueIdentifier = "showImage"
 
   // MARK: - Properties
   private var presenter: ListRedditsPresenter!
   fileprivate let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  fileprivate var redditModelForDetails: RedditModel?
 
   // MARK: - ViewController lifecycle methods
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    //Presenter Setup
-    let presenterFactory = ListRedditsPresenterFactory(view: self)
-    self.presenter = presenterFactory.presenter
-
-    //Automatic Row Dimension
+    //TableView Setup
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = estimatedRowHeight
+    tableView.separatorStyle = .none
 
     //Loading indicator
     loadingIndicator.center = view.center
     view.addSubview(loadingIndicator)
+
+    //Presenter Setup
+    let presenterFactory = ListRedditsPresenterFactory(view: self)
+    presenter = presenterFactory.presenter
+    presenter.start()
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    tableView.separatorStyle = .none
-    presenter.start()
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == showImageSegueIdentifier,
+       let destinationViewController = segue.destination as? ViewRedditDetailsViewController {
+
+      destinationViewController.redditModel = redditModelForDetails
+    }
   }
 
   // MARK: - UITableViewDataSource
@@ -74,6 +81,7 @@ class ListRedditsViewController: UITableViewController {
   // MARK: - UITableViewDelegate
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    presenter.elementSelected(atPosition: indexPath.row)
   }
 }
 
@@ -87,13 +95,18 @@ extension ListRedditsViewController: ListRedditsViewProtocol {
     loadingIndicator.stopAnimating()
   }
 
-  func displayLoadingError(message: String) {
-    let alertViewController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+  func displayMessage(title: String, message: String) {
+    let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
     present(alertViewController, animated: true, completion: nil)
   }
 
   func refreshRedditsList() {
     tableView.reloadData()
+  }
+
+  func showDetailsScreen(forModel model: RedditModel) {
+    redditModelForDetails = model
+    performSegue(withIdentifier: showImageSegueIdentifier, sender: self)
   }
 }
