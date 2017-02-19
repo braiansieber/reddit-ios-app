@@ -1,5 +1,5 @@
 # reddit-ios-app
-Reddit iOS App is a simlpe Top Reddits viewer. It is implemented in Swift 3 with just native components, without using any third-party library. It is implemented following object-oriented design good practices and patterns, like Dependency Injection (DI), Model-View-Presenter (MVP), Unit Testing and Service Testing. Test-Driven Development (TDD) process was followed to implement List Reddits Presenter features.
+Reddit iOS App is a simple Top Reddits viewer. It is implemented in Swift 3 with just native components, without using any third-party library. It is implemented following object-oriented design good practices and patterns, like Dependency Injection (DI), Model-View-Presenter (MVP), Unit Testing and Service Testing. Test-Driven Development (TDD) process was followed to implement List Reddits Presenter features.
 
 ## Features
 - Get Top Reddits from API using URLSession and GCD.
